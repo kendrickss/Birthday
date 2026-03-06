@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Jerry!</title>
+    <style>
+        :root {
+            --bg-color: #ffffff; /* Putih Bersih */
+            --main-pink: #ffafcc; /* Pink Pastel */
+            --text-dark: #333333; /* Warna teks biar jelas */
+            --accent-pink: #fb6f92; /* Pink Lebih Terang */
+            --soft-pink: #fff0f3; /* Pink Sangat Muda untuk background ucapan */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Dekorasi Lingkaran Pink di Background */
+        .circle {
+            position: fixed;
+            border-radius: 50%;
+            background: var(--main-pink);
+            opacity: 0.2;
+            z-index: -1;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 400px;
+            background: #ffffff;
+            padding: 35px 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(255, 175, 204, 0.3);
+            text-align: center;
+            border: 2px solid var(--main-pink);
+            transition: all 0.5s ease;
+        }
+
+        .foto-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            padding: 8px;
+            background: linear-gradient(45deg, var(--main-pink), var(--accent-pink));
+            box-shadow: 0 5px 15px rgba(251, 111, 146, 0.3);
+            overflow: hidden; /* Biar fotonya tetap bulat */
+        }
+
+        .foto-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            position: absolute; /* Biar menumpuk */
+            top: 4px; /* Menyesuaikan border padding */
+            left: 4px;
+            transition: opacity 0.8s ease, transform 0.8s ease; /* Efek transisi halus */
+        }
+
+        /* Foto Pertama (Sebelum diklik) */
+        #foto-sebelum {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Foto Kedua (Setelah diklik, awalnya sembunyi) */
+        #foto-sesudah {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        /* Saat State 'Surprise' aktif */
+        .surprise-active #foto-sebelum {
+            opacity: 0;
+            transform: scale(1.2);
+        }
+
+        .surprise-active #foto-sesudah {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        h1 {
+            font-size: 26px;
+            color: var(--accent-pink);
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            transition: color 0.5s ease;
+        }
+
+        .surprise-active h1 {
+            color: var(--main-pink); /* Sedikit berubah warnanya */
+        }
+
+        .wish-text {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .btn-surprise {
+            background-color: var(--accent-pink);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(251, 111, 146, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-surprise:active {
+            transform: scale(0.9);
+        }
+
+        .surprise-active .btn-surprise {
+            background-color: var(--main-pink);
+            transform: translateY(5px);
+            box-shadow: 0 2px 5px rgba(251, 111, 146, 0.2);
+        }
+
+        /* Bagian Ucapan Panjang (Awalnya Sembunyi) */
+        #ucapan-panjang {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background: var(--soft-pink);
+            border-radius: 20px;
+            border: 1px dashed var(--main-pink);
+            text-align: left; /* Teks ucapan rata kiri biar rapi */
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #ucapan-panjang p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+        .signature {
+            font-style: italic;
+            color: var(--accent-pink);
+            text-align: right;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="circle" style="width: 250px; height: 250px; top: -70px; left: -70px;"></div>
+    <div class="circle" style="width: 180px; height: 180px; bottom: -40px; right: -40px;"></div>
+
+    <audio id="lagu">
+        <source src="https://files.catbox.moe/p9o481.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container" id="main-container">
+        <div class="foto-container">
+            <img src="https://ibb.co.com/Psbd5gkT" alt="Foto Sebelum" id="foto-sebelum">
+            
+            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Love" alt="Foto Sesudah" id="foto-sesudah">
+        </div>
+
+        <h1>HAPPY BORNDAY 🤍</h1>
+        
+        <p class="wish-text">
+            "Happy birthday, today is going to be a surprising year . <br>
+            Coba deh klik tombol di bawah ini..."
+        </p>
+
+        <button class="btn-surprise" onclick="bukaKejutan()">Open this 🎁</button>
+
+        <div id="ucapan-panjang">
+            <p><strong>Dearest Jerry,</strong></p>
+            
+            <p>
+                Happy birthday! The universe has been so kind to me for giving me the time to get to know you. On this special day, I just want to say... thank you. Thank you for being the reason I smile every day.
+            </p>
+            
+            <p>
+                May you feel happy, loved, and appreciated every day of this new age. You are extraordinary, and you deserve all the good things in this world. Never change.
+            </p>
+            
+            <p>
+                I hope this year brings lots of exciting adventures, laughter, and happy memories for both of us. Don't forget to get plenty of rest and eat plenty!
+            </p>
+            
+            <p>I Love You 3000!</p>
+            
+            <p class="signature">— Kendrick.</p>
+        </div>
+    </div>
+
+    <script>
+        function bukaKejutan() {
+            const container = document.getElementById('main-container');
+            const song = document.getElementById('lagu');
+            const button = document.querySelector('.btn-surprise');
+            const ucapan = document.getElementById('ucapan-panjang');
+            
+            // Aktifkan State Surprise (Ubah Foto, DLL)
+            container.classList.add('surprise-active');
+            
+            // Putar Musik
+            song.play();
+            
+            // Tampilkan Ucapan Panjang
+            ucapan.style.display = 'block';
+            
+            // Ubah teks tombol dan nonaktifkan (biar nggak diklik dua kali)
+            button.innerText = 'Yay! 💖';
+            button.disabled = true;
+            
+            // Efek Hati Meriah
+            createHearts();
+        }
+
+        function createHearts() {
+            const emojis = ['🌸','✨','💖','☁️','🍭'];
+            for(let i=0; i<40; i++) {
+                const heart = document.createElement('div');
+                heart.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+                heart.style.position = 'fixed';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = '-20px';
+                heart.style.fontSize = Math.random() * 20 + 20 + 'px';
+                heart.style.zIndex = '100';
+                heart.style.transition = `transform ${Math.random() * 2 + 3}s linear, opacity 3s`;
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.style.transform = `translateY(110vh) rotate(${Math.random()*360}deg)`;
+                    heart.style.opacity = '0';
+                }, 100);
+                
+                setTimeout(() => heart.remove(), 5000);
+            }
+        }
+    </script>
+</body>
+</html>
